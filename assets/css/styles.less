@@ -1,0 +1,154 @@
+@sans-serif: 'Inconsolata', sans-serif;
+@gray: #ccc;
+@dark-gray: #666;
+@red: #ff0000 - #444;
+@blue: #0000ff - #444;
+@green: #00ff00 - #555;
+
+body {
+  font-family: @sans-serif;
+  text-align: center;
+  padding-bottom: 50px;
+}
+
+.idea-header {
+  margin-top: 10%;
+}
+
+.idea-title {
+  letter-spacing: 2px;
+  font-size: 2.5em;
+}
+
+.idea-form {
+  width: 68%;
+  margin: 0 auto;
+  margin-top: 45px;
+}
+
+.idea-types, .idea-list {
+  list-style-type: none;
+  margin-top: 0px;
+  width: 100%;
+  padding: 0px;
+  margin-bottom: 0px;
+}
+
+.idea-type {
+  width: 25%;
+  display: inline-block;
+  cursor: pointer;
+  padding: 10px 0px;
+  &:hover {
+    font-weight: 700;
+  }
+}
+
+.idea-type-gray {
+  color: @dark-gray;
+}
+
+.idea-type-red {
+  color: @red;
+}
+
+.idea-type-blue {
+  color: @blue;
+}
+
+.idea-type-green {
+  color: @green;
+}
+
+.idea-type-selected {
+  font-weight: 700;
+  background-color: @gray + #222;
+}
+
+.idea-input, .idea-filter-input {
+  font-family: @sans-serif;
+  outline: none;
+  border: none;
+  border: 1px solid @gray;
+  display: inline-block;
+}
+
+.idea-input {
+  width: ~"calc(100% - 16px)";
+  font-size: 1.2em;
+  padding: 8px;
+}
+
+.idea-filter-input {
+  margin-top: 20px;
+  font-size: 1em;
+  padding: 5px;
+  width: 80%;
+}
+
+.idea-submit-button {
+  padding: 8px;
+  font-size: 1.2em;
+  margin-top: 10px;
+  color: @dark-gray;
+  border: none;
+  display: inline-block;
+}
+
+.idea-list {
+  width: 68%;
+  margin: 0 auto;
+  text-align: left;
+  margin-top: 30px;
+}
+
+.idea-item {
+  background-color: #efefef;
+  margin: 12px 0px;
+  padding: 5px 0px;
+  p {
+    width: 95%;
+    margin: 0 auto;
+    padding: 5px 0px;
+  }
+}
+
+.item-datetime, .item-type {
+  font-size: 0.85em;
+}
+
+.item-datetime {
+  margin-right: 15px;
+  color: @dark-gray - #222222;
+}
+
+.item-type {
+  text-transform: uppercase;
+  color: @red;
+}
+
+.item-type-unspecified {
+  color: @dark-gray;
+}
+
+.item-type-philanthropy {
+  color: @blue;
+}
+
+.item-type-productivity {
+  color: @green;
+}
+
+.form-error {
+  color: @red - #222;
+  margin-top: 10px;
+  margin-bottom: 4px;
+  font-size: 0.9em;
+  text-align: left;
+}
+
+.hidden {
+  display: none;
+}
+
+

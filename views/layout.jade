@@ -1,0 +1,28 @@
+doctype html
+//if lt IE 7 ]><html class="ie ie6" lang="en">
+//if IE 7 ]><html class="ie ie7" lang="en">
+//if IE 8 ]><html class="ie ie8" lang="en">
+// [if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]
+head
+  meta(charset='utf-8')
+  title The Exhibition Ideas List!
+  meta(name='description', content='')
+  meta(name='author', content='')
+  // Mobile Specific
+  meta(name="viewport", content="width=device-width, initial-scale=1.0")
+  link(href='http://fonts.googleapis.com/css?family=Inconsolata:400,700', rel='stylesheet', type='text/css')
+
+  // CSS
+  != css('styles')
+
+body
+  block content
+
+  != js('//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js')
+  != js('//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.3/moment.min.js')
+  != js('//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js')
+  != js('//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js')
+  != js('//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.min.js')
+  != js('IdeaListView')
+
+| </html>

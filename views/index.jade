@@ -1,0 +1,23 @@
+extends layout
+block content
+
+  div.idea-header
+    h1.idea-title
+      | THE EXHIBITION TEAM IDEAS
+
+  div.idea-form
+    ul.idea-types
+      li.idea-type.idea-type-gray.idea-type-selected(data-idea-type='unspecified')
+        | UNSPECIFIED
+      li.idea-type.idea-type-red(data-idea-type='art/gallery')
+        | ART/GALLERY
+      li.idea-type.idea-type-blue(data-idea-type='philanthropy')
+        | PHILANTHROPY
+      li.idea-type.idea-type-green(data-idea-type='productivity')
+        | PRODUCTIVITY
+    p.form-error.hidden
+    input.idea-input(placeholder='Add your idea here!')
+    a.idea-submit-button(href="#")
+      | SUBMIT
+    p
+      input.idea-filter-input(placeholder='Simple text search')
