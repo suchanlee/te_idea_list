@@ -10,9 +10,8 @@ jQuery ->
       'update': '/ideas/update'
       'delete': '/ideas/delete'
 
-    initialize: (count) ->
+    initialize: ->
       @_listTypeEnum = ['unspecified', 'art/gallery', 'philanthropy', 'productivity']
-      @set 'count', count
 
     defaults:
       listType: 'unspecified'
@@ -73,14 +72,14 @@ jQuery ->
       @_gentrifyModel()
       $(@el).html "<p class='idea-item-link'><a href='/ideas/#{@model.get 'id'}' target='_blank'>##{@model.get 'id'}</a>" +
                   "<span class='item-meta item-likes'><a href='#' class='item-like-button'>LIKES:</a> #{@model.get 'likes'}</span></p>" +
-                  "<p class='idea-item-header'><span class='item-datetime item-meta'>#{@model.get 'datetime'}</span>" +
+                  "<p class='idea-item-header'><span class='item-datetime item-meta'>#{@model.get 'templateDatetime'}</span>" +
                   "<span class='item-meta item-type item-type-#{@model.get 'listType'}'>#{@model.get 'listType'}</span></p>" +
                   "<p class='idea-item-body'>#{@model.get 'body'}</p>"
       @
 
     _gentrifyModel: ->
-      if moment(@model.get('datetime')).isValid()
-        @model.set 'datetime', new moment(@model.get('datetime')).calendar()
+      if moment(@model.get('templateDatetime')).isValid()
+        @model.set 'templateDatetime', new moment(@model.get('datetime')).calendar()
       if not @model.get 'urlsReplaced'
         @model.set('body', @model.get('body')
           .replace(@regex, '<a target="_blank" href="$&">$&</a>')
@@ -88,8 +87,22 @@ jQuery ->
         @model.set 'urlsReplaced', true
 
     likeItem: ->
-      @model.set 'likes', @model.get 'likes' + 1
+      if @_alreadyLikedIdea()
+        alert 'You can only like an idea once!'
+        return false
+      @model.set 'likes', @model.get('likes') + 1
       @model.save()
+      @render()
+      @_rememberLikedIdea()
+      return false
+
+    _rememberLikedIdea: ->
+      Cookies.set('likedIdea' + @model.get('id'), 'yes', {
+        expires: '01/01/2100'
+      })
+
+    _alreadyLikedIdea: ->
+      return Cookies.get('likedIdea' + @model.get 'id') is 'yes'
 
     events:
       'click .item-like-button': 'likeItem'

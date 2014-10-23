@@ -33,7 +33,7 @@ module.exports =
 
   # Updates idea with data from `req.body`
   update: (req, res) ->
-    Idea.findByIdAndUpdate req.params.id, {"$set":req.body}, (err, idea) ->
+    Idea.findOneAndUpdate { id: req.body.id }, {"$set":req.body}, (err, idea) ->
       if not err
         res.send idea
       else
