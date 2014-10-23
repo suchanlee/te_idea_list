@@ -16,6 +16,7 @@ jQuery ->
     defaults:
       listType: 'unspecified'
       body: ''
+      urlsReplaced: false
 
     setListType: (listType) ->
       if listType in @_listTypeEnum
@@ -69,14 +70,25 @@ jQuery ->
 
     initialize: ->
       _.bindAll @, 'render'
+      @regex = new RegExp /\b(?:https?|ftp):\/\/[a-z0-9-+&@#\/%?=~_|!:,.;]*[a-z0-9-+&@#\/%=~_|]/gim
+      @pseudoRegex = new RegExp /(^|[^\/])(www\.[\S]+(\b|$))/gim
 
     render: ->
-      if moment(@model.get('datetime')).isValid()
-        @model.set "datetime", new moment(@model.get('datetime')).calendar()
+      @gentrifyModel()
       $(@el).html "<p class='idea-item-header'><span class='item-datetime'>#{@model.get 'datetime'}</span>" +
                   "<span class='item-type item-type-#{@model.get 'listType'}'>#{@model.get 'listType'}</span></p>" +
                   "<p>#{@model.get 'body'}</p>"
       @
+
+    gentrifyModel: ->
+      if moment(@model.get('datetime')).isValid()
+        @model.set 'datetime', new moment(@model.get('datetime')).calendar()
+      if not @model.get 'urlsReplaced'
+        @model.set('body', @model.get('body')
+          .replace(@regex, '<a target="_blank" href="$&">$&</a>')
+          .replace @pseudoRegex, '$1<a target="_blank" href="http://$2">$2</a>')
+        console.log @pseudoRegex
+        @model.set 'urlsReplaced', true
 
 
   class IdeaListView extends Backbone.View
@@ -122,7 +134,6 @@ jQuery ->
 
     filterByBody: (evt) ->
       filteredList = @collection.filterByBody evt.target.value
-      console.log filteredList
       $('.idea-item').addClass 'hidden'
       for item in filteredList.models
         @appendItem item
