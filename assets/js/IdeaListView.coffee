@@ -103,9 +103,7 @@ jQuery ->
       $(@el).append '<ul class="idea-list"></ul>'
 
     addItem: ->
-      @count++
-      console.log @count
-      item = new IdeaItem @count
+      item = new IdeaItem
       try
         item.setListType $('.' + @selectedTypeClassName).attr 'data-idea-type'
       catch e
