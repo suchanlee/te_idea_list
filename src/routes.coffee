@@ -22,7 +22,7 @@ module.exports = (app) ->
   app.all '/:controller', (req, res, next) ->
     routeMvc(req.params.controller, 'index', req, res, next)
 
-  app.all '/:controller/:id(/^\d+$/)', (req, res, next) ->
+  app.all '/:controller/:id(\\d+)', (req, res, next) ->
     routeMvc(req.params.controller, 'get', req, res, next)
 
   #   - _/**:controller**/**:method**_ -> controllers/***:controller***/***:method*** method

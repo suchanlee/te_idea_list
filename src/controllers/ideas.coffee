@@ -24,9 +24,9 @@ module.exports =
 
   # Gets idea by id
   get: (req, res) ->
-    Idea.find { id: req.params.id }, (err, idea) ->
+    Idea.findOne { id: req.params.id }, (err, idea) ->
       if not err
-        res.render 'idea', { idea: idea[0] }
+        res.render 'idea', { idea: idea }
       else
         res.send err
         res.statusCode = 500
