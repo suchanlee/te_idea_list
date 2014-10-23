@@ -5,8 +5,11 @@ module.exports =
 
   # Lists all ideas
   index: (req, res) ->
-    Idea.find {}, (err, ideas) ->
-      res.send ideas
+    Idea.find {}, null, {sort: {'datetime': 1}}, (err, ideas) ->
+      if err
+        console.log err
+      else
+        res.send ideas
 
   # Creates new idea with data from `req.body`
   create: (req, res) ->

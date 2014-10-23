@@ -10,10 +10,12 @@ jQuery ->
       'update': '/ideas/update'
       'delete': '/ideas/delete'
 
-    initialize: ->
+    initialize: (count) ->
       @_listTypeEnum = ['unspecified', 'art/gallery', 'philanthropy', 'productivity']
+      @set 'count', count
 
     defaults:
+      count: -1
       listType: 'unspecified'
       body: ''
       urlsReplaced: false
@@ -46,13 +48,7 @@ jQuery ->
     @bodyFilterText = ''
 
     initialize: ->
-      @fetch @_fetchSuccess, @_fetchError
-
-    _fetchSuccess: (collection, response) ->
-      alert 'fetch success'
-
-    _fetchError: (collection, response) ->
-      alert 'fetch error'
+      @fetch()
 
     filterByBody: (text) ->
       @bodyFilterText = text.toLowerCase()
@@ -75,7 +71,8 @@ jQuery ->
 
     render: ->
       @gentrifyModel()
-      $(@el).html "<p class='idea-item-header'><span class='item-datetime'>#{@model.get 'datetime'}</span>" +
+      $(@el).html "<p>#{@model.get 'id'}</p>" +
+                  "<p class='idea-item-header'><span class='item-datetime'>#{@model.get 'datetime'}</span>" +
                   "<span class='item-type item-type-#{@model.get 'listType'}'>#{@model.get 'listType'}</span></p>" +
                   "<p>#{@model.get 'body'}</p>"
       @
@@ -87,7 +84,6 @@ jQuery ->
         @model.set('body', @model.get('body')
           .replace(@regex, '<a target="_blank" href="$&">$&</a>')
           .replace @pseudoRegex, '$1<a target="_blank" href="http://$2">$2</a>')
-        console.log @pseudoRegex
         @model.set 'urlsReplaced', true
 
 
@@ -97,6 +93,7 @@ jQuery ->
 
     initialize: ->
       _.bindAll @, 'render', 'addItem', 'appendItem'
+      @count = 0
       @collection = new IdeaItemList
       @collection.bind 'add', @appendItem
       @selectedTypeClassName = 'idea-type-selected'
@@ -106,7 +103,9 @@ jQuery ->
       $(@el).append '<ul class="idea-list"></ul>'
 
     addItem: ->
-      item = new IdeaItem
+      @count++
+      console.log @count
+      item = new IdeaItem @count
       try
         item.setListType $('.' + @selectedTypeClassName).attr 'data-idea-type'
       catch e
