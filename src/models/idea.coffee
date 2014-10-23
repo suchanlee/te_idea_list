@@ -17,6 +17,10 @@ Idea = new mongoose.Schema(
     ]
   }
   body: String
+  # likes: {
+  #   type: Number,
+  #   default: 0
+  # }
   datetime: {
     type: Date,
     default: Date.now

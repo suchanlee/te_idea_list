@@ -15,9 +15,9 @@ jQuery ->
       @set 'count', count
 
     defaults:
-      id: -1
       listType: 'unspecified'
       body: ''
+      likes: 0
       urlsReplaced: false
 
     setListType: (listType) ->
@@ -70,14 +70,15 @@ jQuery ->
       @pseudoRegex = new RegExp /(^|[^\/])(www\.[\S]+(\b|$))/gim
 
     render: ->
-      @gentrifyModel()
-      $(@el).html "<p class='idea-item-link'><a href='/ideas/#{@model.get 'id'}' target='_blank'>##{@model.get 'id'}</a></p>" +
-                  "<p class='idea-item-header'><span class='item-datetime'>#{@model.get 'datetime'}</span>" +
-                  "<span class='item-type item-type-#{@model.get 'listType'}'>#{@model.get 'listType'}</span></p>" +
+      @_gentrifyModel()
+      $(@el).html "<p class='idea-item-link'><a href='/ideas/#{@model.get 'id'}' target='_blank'>##{@model.get 'id'}</a>" +
+                  "<span class='item-meta item-likes'><a href='#' class='item-like-button'>LIKES:</a> #{@model.get 'likes'}</span></p>" +
+                  "<p class='idea-item-header'><span class='item-datetime item-meta'>#{@model.get 'datetime'}</span>" +
+                  "<span class='item-meta item-type item-type-#{@model.get 'listType'}'>#{@model.get 'listType'}</span></p>" +
                   "<p class='idea-item-body'>#{@model.get 'body'}</p>"
       @
 
-    gentrifyModel: ->
+    _gentrifyModel: ->
       if moment(@model.get('datetime')).isValid()
         @model.set 'datetime', new moment(@model.get('datetime')).calendar()
       if not @model.get 'urlsReplaced'
@@ -85,6 +86,13 @@ jQuery ->
           .replace(@regex, '<a target="_blank" href="$&">$&</a>')
           .replace @pseudoRegex, '$1<a target="_blank" href="http://$2">$2</a>')
         @model.set 'urlsReplaced', true
+
+    likeItem: ->
+      @model.set 'likes', @model.get 'likes' + 1
+      @model.save()
+
+    events:
+      'click .item-like-button': 'likeItem'
 
 
   class IdeaListView extends Backbone.View
