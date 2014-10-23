@@ -15,7 +15,7 @@ jQuery ->
       @set 'count', count
 
     defaults:
-      count: -1
+      id: -1
       listType: 'unspecified'
       body: ''
       urlsReplaced: false
@@ -71,10 +71,10 @@ jQuery ->
 
     render: ->
       @gentrifyModel()
-      $(@el).html "<p>#{@model.get 'id'}</p>" +
+      $(@el).html "<p class='idea-item-link'><a href='/ideas/#{@model.get 'id'}' target='_blank'>##{@model.get 'id'}</a></p>" +
                   "<p class='idea-item-header'><span class='item-datetime'>#{@model.get 'datetime'}</span>" +
                   "<span class='item-type item-type-#{@model.get 'listType'}'>#{@model.get 'listType'}</span></p>" +
-                  "<p>#{@model.get 'body'}</p>"
+                  "<p class='idea-item-body'>#{@model.get 'body'}</p>"
       @
 
     gentrifyModel: ->
