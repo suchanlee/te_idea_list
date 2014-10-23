@@ -13,7 +13,6 @@ module.exports =
 
   # Creates new idea with data from `req.body`
   create: (req, res) ->
-    console.log 'sdf'
     idea = new Idea req.body
     idea.save (err, idea) ->
       if not err
